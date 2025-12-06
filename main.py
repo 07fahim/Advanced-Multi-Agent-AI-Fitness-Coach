@@ -161,7 +161,7 @@ def goals_form():
                         st.success("✅ Goals updated!")
                         st.rerun()
                 else:
-                    st.warning("⚠️ Please select at least one goal1!")
+                    st.warning("⚠️ Please select at least one goal!")
 
 
 def macros():
