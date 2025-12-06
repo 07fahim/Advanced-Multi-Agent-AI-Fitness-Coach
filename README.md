@@ -11,7 +11,7 @@
 
 An intelligent fitness coaching application powered by AI that provides personalized workout plans, nutrition guidance, and real-time fitness advice.
 
-[🚀 Live Demo](#) • [📖 Documentation](#) • [🐛 Report Bug](#) • [💡 Request Feature](#)
+[🚀 Live Demo](https://fitness-coach-wsipw4fnqsa9zkrdej4cjh.streamlit.app) • [🐛 Report Bug](#) • [💡 Request Feature](#)
 
 </div>
 
