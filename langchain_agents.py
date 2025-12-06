@@ -4,40 +4,7 @@
 
 from langchain_groq import ChatGroq
 from langchain_core.prompts import ChatPromptTemplate
-try:
-    from langchain.agents.tool_calling_agent.base import create_tool_calling_agent
-except ImportError:
-    try:
-        from langchain.agents import create_tool_calling_agent
-    except ImportError:
-        # Fallback: try to import from the main agents module
-        try:
-            from langchain.agents.tool_calling_agent import create_tool_calling_agent
-        except ImportError:
-            # Try langchain-classic if available
-            try:
-                from langchain_classic.agents import create_tool_calling_agent
-            except ImportError:
-                # If all else fails, we'll use bind_tools approach
-                create_tool_calling_agent = None
-
-try:
-    from langchain.agents import AgentExecutor
-except ImportError:
-    try:
-        from langchain.agents.agent_executor import AgentExecutor
-    except ImportError:
-        try:
-            from langchain_core.agents import AgentExecutor
-        except ImportError:
-            # Try langchain-classic if available
-            try:
-                from langchain_classic.agents import AgentExecutor
-            except ImportError:
-                raise ImportError(
-                    "Could not import AgentExecutor. Please install langchain-classic: "
-                    "pip install langchain-classic"
-                )
+from langchain_classic.agents import create_tool_calling_agent, AgentExecutor
 from langchain_core.tools import Tool
 from langchain_community.vectorstores import AstraDB
 from dotenv import load_dotenv
@@ -271,38 +238,11 @@ Use the tools available to help {user_name} with their questions. Always refer t
             ("placeholder", "{agent_scratchpad}"),
         ])
         
-        if create_tool_calling_agent is not None:
-            self.tool_agent = create_tool_calling_agent(
-                self.math_llm,
-                [calculator_tool],
-                tool_prompt
-            )
-        else:
-            # Fallback: try create_react_agent or use LLM with bound tools
-            try:
-                from langchain.agents import create_react_agent
-                from langchain import hub
-                try:
-                    # Try to use the default react prompt
-                    prompt = hub.pull("hwchase17/react")
-                except:
-                    # Use a simple prompt if hub is not available
-                    prompt = tool_prompt
-                
-                self.tool_agent = create_react_agent(
-                    self.math_llm,
-                    [calculator_tool],
-                    prompt
-                )
-            except ImportError:
-                # Last resort: use LLM with bound tools (simpler approach)
-                # This requires a different executor setup
-                self.tool_agent = self.math_llm.bind_tools([calculator_tool])
-                # Note: This approach may require different executor logic
-                raise ImportError(
-                    "Could not import create_tool_calling_agent or create_react_agent. "
-                    "Please ensure you have a compatible version of langchain installed."
-                )
+        self.tool_agent = create_tool_calling_agent(
+            self.math_llm,
+            [calculator_tool],
+            tool_prompt
+        )
         
         self.tool_executor = AgentExecutor(
             agent=self.tool_agent,
