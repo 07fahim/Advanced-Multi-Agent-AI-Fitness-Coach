@@ -77,3 +77,28 @@ def get_all_user_names():
 def get_notes(_id):
     """Get all notes for a user"""
     return list(notes_collection.find({"user_id": {"$eq": _id}}))
+
+
+def delete_profile(profile_id):
+    """Delete a profile and all associated notes"""
+    try:
+        # Delete all notes associated with this profile
+        notes_collection.delete_many({"user_id": {"$eq": profile_id}})
+        
+        # Delete the profile
+        result = personal_data_collection.delete_one({"_id": {"$eq": profile_id}})
+        return result.deleted_count > 0
+    except Exception as e:
+        print(f"Error deleting profile: {e}")
+        return False
+
+
+def delete_profile_by_name(name):
+    """Delete a profile by name and all associated notes"""
+    if not name or not name.strip():
+        return False
+    
+    profile = get_profile_by_name(name.strip())
+    if profile:
+        return delete_profile(profile["_id"])
+    return False
