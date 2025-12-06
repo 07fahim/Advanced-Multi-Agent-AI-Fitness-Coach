@@ -352,113 +352,120 @@ def ask_ai_func():
 
 def user_selection():
     """User selection screen - name-based"""
-    st.title("👤 Welcome to AI Fitness Coach App")
-    st.markdown("### Get Started")
-    st.info("💡 Enter your name to continue. If you're new, a profile will be created for you automatically.")
+    # Center the content with reduced width
+    col1, col2, col3 = st.columns([1, 2, 1])
     
-    # Get existing users
-    existing_users = get_all_user_names()
-    
-    if existing_users:
-        st.markdown("### 👥 Existing Users")
-        st.caption("Select your name if you've used the app before")
+    with col2:
+        st.title("👤 Welcome to Advanced Multi-Agent AI Fitness Coach")
+        st.markdown("### Get Started")
+        st.info("💡 Enter your name to continue. If you're new, a profile will be created for you automatically.")
         
-        # Profile selection section
-        selected_existing = st.selectbox(
-            "Choose your profile:",
-            [""] + existing_users,
-            key="existing_user_select",
-            help="Select your name from the list",
-            label_visibility="visible"
-        )
+        # Get existing users
+        existing_users = get_all_user_names()
         
-        if selected_existing:
-            profile = get_profile_by_name(selected_existing)
-            if profile:
-                st.session_state.user_name = selected_existing
-                st.session_state.profile = profile
-                st.session_state.profile_id = profile["_id"]
-                st.session_state.notes = get_notes(profile["_id"])
-                st.session_state.chat_history = []
-                st.rerun()
-        
-        # Delete profile section - separate and clearly marked
-        st.markdown("---")
-        st.markdown("#### 🗑️ Delete Profile")
-        st.caption("⚠️ Permanently delete a profile and all associated data")
-        
-        delete_profile_name = st.selectbox(
-            "Select profile to delete:",
-            [""] + existing_users,
-            key="delete_profile_select",
-            help="Choose a profile to permanently delete",
-            label_visibility="visible"
-        )
-        
-        if delete_profile_name:
-            st.warning(f"⚠️ **Warning:** You are about to delete profile: **{delete_profile_name}**")
-            st.caption("This will permanently delete the profile and all associated notes. This action cannot be undone.")
-            
-            col1, col2 = st.columns([1, 1])
-            with col1:
-                if st.button("🗑️ Confirm Delete", type="primary", use_container_width=True, key="confirm_delete_user_select"):
-                    if delete_profile_by_name(delete_profile_name):
-                        st.success(f"✅ Profile '{delete_profile_name}' and all associated data have been deleted.")
-                        st.info("🔄 Refreshing user list...")
-                        # Clear the delete selection by rerunning (widget will reset)
-                        if "delete_profile_select" in st.session_state:
-                            del st.session_state.delete_profile_select
-                        st.rerun()
-                    else:
-                        st.error("❌ Failed to delete profile. Please try again.")
-            with col2:
-                if st.button("❌ Cancel", use_container_width=True, key="cancel_delete_user_select"):
-                    # Clear the delete selection by rerunning (widget will reset)
-                    if "delete_profile_select" in st.session_state:
-                        del st.session_state.delete_profile_select
-                    st.rerun()
-    
-    st.divider()
-    st.markdown("### ✨ New User")
-    st.caption("Enter your name to create a new profile")
-    
-    with st.form("user_selection_form"):
-        user_name = st.text_input(
-            "👤 Your Name:",
-            placeholder="e.g., John, Sarah, Alex...",
-            key="new_user_name",
-            help="This will be used to personalize your experience"
-        )
-        submit = st.form_submit_button("🚀 Get Started", type="primary", use_container_width=True)
-        
-        if submit:
-            if user_name and user_name.strip():
-                # Check if user already exists
-                existing_profile = get_profile_by_name(user_name.strip())
+        if existing_users:
+            with st.container(border=True):
+                st.markdown("### 👥 Existing Users")
+                st.caption("Select your name if you've used the app before")
                 
-                if existing_profile:
-                    # Load existing profile
-                    st.session_state.user_name = user_name.strip()
-                    st.session_state.profile = existing_profile
-                    st.session_state.profile_id = existing_profile["_id"]
-                    st.session_state.notes = get_notes(existing_profile["_id"])
-                    st.session_state.chat_history = []
-                    st.rerun()
-                else:
-                    # Create new profile
-                    profile_id, new_profile = create_profile_by_name(user_name.strip())
-                    if profile_id and new_profile:
-                        st.session_state.user_name = user_name.strip()
-                        st.session_state.profile = new_profile
-                        st.session_state.profile_id = profile_id
-                        st.session_state.notes = []
+                # Profile selection section
+                selected_existing = st.selectbox(
+                    "Choose your profile:",
+                    [""] + existing_users,
+                    key="existing_user_select",
+                    help="Select your name from the list",
+                    label_visibility="visible"
+                )
+                
+                if selected_existing:
+                    profile = get_profile_by_name(selected_existing)
+                    if profile:
+                        st.session_state.user_name = selected_existing
+                        st.session_state.profile = profile
+                        st.session_state.profile_id = profile["_id"]
+                        st.session_state.notes = get_notes(profile["_id"])
                         st.session_state.chat_history = []
-                        st.success(f"✅ Welcome, {user_name.strip()}! Your profile has been created.")
                         st.rerun()
+            
+            # Delete profile section - separate and clearly marked
+            with st.container(border=True):
+                st.markdown("#### 🗑️ Delete Profile")
+                st.caption("⚠️ Permanently delete a profile and all associated data")
+                
+                delete_profile_name = st.selectbox(
+                    "Select profile to delete:",
+                    [""] + existing_users,
+                    key="delete_profile_select",
+                    help="Choose a profile to permanently delete",
+                    label_visibility="visible"
+                )
+                
+                if delete_profile_name:
+                    st.warning(f"⚠️ **Warning:** You are about to delete profile: **{delete_profile_name}**")
+                    st.caption("This will permanently delete the profile and all associated notes. This action cannot be undone.")
+                    
+                    col1, col2 = st.columns([1, 1])
+                    with col1:
+                        if st.button("🗑️ Confirm Delete", type="primary", use_container_width=True, key="confirm_delete_user_select"):
+                            if delete_profile_by_name(delete_profile_name):
+                                st.success(f"✅ Profile '{delete_profile_name}' and all associated data have been deleted.")
+                                st.info("🔄 Refreshing user list...")
+                                # Clear the delete selection by rerunning (widget will reset)
+                                if "delete_profile_select" in st.session_state:
+                                    del st.session_state.delete_profile_select
+                                st.rerun()
+                            else:
+                                st.error("❌ Failed to delete profile. Please try again.")
+                    with col2:
+                        if st.button("❌ Cancel", use_container_width=True, key="cancel_delete_user_select"):
+                            # Clear the delete selection by rerunning (widget will reset)
+                            if "delete_profile_select" in st.session_state:
+                                del st.session_state.delete_profile_select
+                            st.rerun()
+        
+        st.divider()
+        
+        with st.container(border=True):
+            st.markdown("### ✨ New User")
+            st.caption("Enter your name to create a new profile")
+            
+            with st.form("user_selection_form"):
+                user_name = st.text_input(
+                    "👤 Your Name:",
+                    placeholder="e.g., John, Sarah, Alex...",
+                    key="new_user_name",
+                    help="This will be used to personalize your experience"
+                )
+                submit = st.form_submit_button("🚀 Get Started", type="primary", use_container_width=True)
+                
+                if submit:
+                    if user_name and user_name.strip():
+                        # Check if user already exists
+                        existing_profile = get_profile_by_name(user_name.strip())
+                        
+                        if existing_profile:
+                            # Load existing profile
+                            st.session_state.user_name = user_name.strip()
+                            st.session_state.profile = existing_profile
+                            st.session_state.profile_id = existing_profile["_id"]
+                            st.session_state.notes = get_notes(existing_profile["_id"])
+                            st.session_state.chat_history = []
+                            st.rerun()
+                        else:
+                            # Create new profile
+                            profile_id, new_profile = create_profile_by_name(user_name.strip())
+                            if profile_id and new_profile:
+                                st.session_state.user_name = user_name.strip()
+                                st.session_state.profile = new_profile
+                                st.session_state.profile_id = profile_id
+                                st.session_state.notes = []
+                                st.session_state.chat_history = []
+                                st.success(f"✅ Welcome, {user_name.strip()}! Your profile has been created.")
+                                st.rerun()
+                            else:
+                                st.error("❌ Could not create profile. Please try again.")
                     else:
-                        st.error("❌ Could not create profile. Please try again.")
-            else:
-                st.warning("⚠️ Please enter your name!")
+                        st.warning("⚠️ Please enter your name!")
 
 
 def forms():
