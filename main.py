@@ -25,7 +25,7 @@ st.set_page_config(
     page_icon="🏋️",
     layout="wide",
     initial_sidebar_state="expanded"
-)
+)  # Updated title
 
 # Header with professional styling
 col1, col2, col3 = st.columns([1, 3, 1])
