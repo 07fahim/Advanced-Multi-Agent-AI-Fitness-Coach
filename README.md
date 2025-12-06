@@ -51,9 +51,9 @@ _AI-Generated Macro Recommendations_
 
 **🎥 Project Demo Video**
 
-[![Advanced Multi-Agent AI Fitness Coach Demo Video](https://img.youtube.com/vi/4koKplvon60/maxresdefault.jpg)](https://youtu.be/4koKplvon60)
+[![Fitness Coach App Demo Video](https://img.youtube.com/vi/4koKplvon60/maxresdefault.jpg)](https://youtu.be/4koKplvon60)
 
-**👉 [Click the thumbnail above or here to watch the demo video on YouTube](https://youtu.be/4koKplvon60)**
+**👉 [Click the thumbnail above or here to watch the demo video on YouTube](https://vimeo.com/1144168977?share=copy)**
 
 </div>
 
