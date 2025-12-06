@@ -1,4 +1,4 @@
-# 🏋️ AI-Powered Fitness Coach
+# 🏋️ Advanced Multi-Agent AI Fitness Coach
 
 <div align="center">
 
@@ -9,7 +9,7 @@
 
 **Your Personal Trainer & Nutritionist in One**
 
-An intelligent fitness coaching application powered by AI that provides personalized workout plans, nutrition guidance, and real-time fitness advice.
+Get personalized fitness coaching and nutrition guidance powered by AI, tailored to your goals and profile.
 
 [🚀 Live Demo](https://fitness-coach-wsipw4fnqsa9zkrdej4cjh.streamlit.app) • [🐛 Report Bug](#) • [💡 Request Feature](#)
 
@@ -51,7 +51,7 @@ _AI-Generated Macro Recommendations_
 
 **🎥 Project Demo Video**
 
-[![Fitness Coach App Demo Video](https://img.youtube.com/vi/4koKplvon60/maxresdefault.jpg)](https://youtu.be/4koKplvon60)
+[![Advanced Multi-Agent AI Fitness Coach Demo Video](https://img.youtube.com/vi/4koKplvon60/maxresdefault.jpg)](https://youtu.be/4koKplvon60)
 
 **👉 [Click the thumbnail above or here to watch the demo video on YouTube](https://youtu.be/4koKplvon60)**
 
@@ -440,6 +440,6 @@ If you find this project helpful, please give it a ⭐ on GitHub!
 
 **Made with ❤️ using Streamlit, LangChain, and Groq AI**
 
-[⬆ Back to Top](#-ai-powered-fitness-coach)
+[⬆ Back to Top](#-advanced-multi-agent-ai-fitness-coach)
 
 </div>
