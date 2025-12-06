@@ -24,7 +24,7 @@ An intelligent fitness coaching application powered by AI that provides personal
 
 **🎥 Project Demo Video Coming Soon!**
 
-_[[Video will be embedded here](https://vimeo.com/1144168977?share=copy)]_
+(https://vimeo.com/1144168977?share=copy)
 
 </div>
 
