@@ -52,13 +52,13 @@ def personal_data_form():
 
         name = st.text_input("Name", value=name_value, placeholder="Enter your name")
         
-        # Use 0 or None for empty fields - will show as empty/placeholder
+        # Use min_value as default for empty fields to avoid validation errors
         age = st.number_input(
             "Age (years)", 
             min_value=1, 
             max_value=120, 
             step=1, 
-            value=int(age_value) if age_value is not None else 0,
+            value=int(age_value) if age_value is not None and age_value > 0 else 1,
             help="Enter your age in years"
         )
         age = age if age > 0 else None
@@ -70,7 +70,7 @@ def personal_data_form():
                 min_value=0.0, 
                 max_value=300.0, 
                 step=0.1, 
-                value=float(weight_value) if weight_value is not None else 0.0,
+                value=float(weight_value) if weight_value is not None and weight_value > 0 else 0.0,
                 help="Enter your weight in kilograms"
             )
             weight = weight if weight > 0 else None
@@ -80,7 +80,7 @@ def personal_data_form():
                 min_value=0.0, 
                 max_value=250.0, 
                 step=0.1, 
-                value=float(height_value) if height_value is not None else 0.0,
+                value=float(height_value) if height_value is not None and height_value > 0 else 0.0,
                 help="Enter your height in centimeters"
             )
             height = height if height > 0 else None
