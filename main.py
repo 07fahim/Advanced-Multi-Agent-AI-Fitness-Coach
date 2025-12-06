@@ -401,14 +401,17 @@ def user_selection():
                     if delete_profile_by_name(delete_profile_name):
                         st.success(f"✅ Profile '{delete_profile_name}' and all associated data have been deleted.")
                         st.info("🔄 Refreshing user list...")
-                        # Clear the delete selection
-                        st.session_state.delete_profile_select = ""
+                        # Clear the delete selection by rerunning (widget will reset)
+                        if "delete_profile_select" in st.session_state:
+                            del st.session_state.delete_profile_select
                         st.rerun()
                     else:
                         st.error("❌ Failed to delete profile. Please try again.")
             with col2:
                 if st.button("❌ Cancel", use_container_width=True, key="cancel_delete_user_select"):
-                    st.session_state.delete_profile_select = ""
+                    # Clear the delete selection by rerunning (widget will reset)
+                    if "delete_profile_select" in st.session_state:
+                        del st.session_state.delete_profile_select
                     st.rerun()
     
     st.divider()
