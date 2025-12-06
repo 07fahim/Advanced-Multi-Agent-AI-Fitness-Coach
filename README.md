@@ -24,7 +24,7 @@ An intelligent fitness coaching application powered by AI that provides personal
 
 **🎥 Project Demo Video Coming Soon!**
 
-*[Video will be embedded here]*
+_[Video will be embedded here]_
 
 </div>
 
@@ -33,45 +33,71 @@ An intelligent fitness coaching application powered by AI that provides personal
 ## ✨ Features
 
 ### 🤖 AI-Powered Coaching
+
 - **Intelligent Chat Assistant**: Get personalized fitness and nutrition advice powered by Groq AI
 - **Context-Aware Responses**: AI remembers your conversation history and profile
 - **Multi-Agent System**: Smart routing between general fitness advice and math-based calculations
+- **Personalized Conversations**: AI addresses you by name and references your specific profile data
+- **Chat History**: Full conversation history maintained for context-aware responses
 
-### 👤 Personalized Profiles
-- **User Management**: Multiple user support with name-based profiles
+### 👤 User Management & Profiles
+
+- **Multiple User Support**: Name-based profile system for multiple users
+- **Easy User Selection**: Quick profile switching with dropdown selection
+- **Profile Management**: Create, select, and delete user profiles
 - **Comprehensive Data**: Track age, weight, height, gender, and activity level
 - **Goal Setting**: Set and track fitness goals (Muscle Gain, Fat Loss, Stay Active)
+- **Profile Deletion**: Safely delete profiles with confirmation dialogs
 
 ### 🥗 Nutrition & Macros
+
 - **AI-Generated Macros**: Get personalized daily macronutrient recommendations
+- **One-Click Generation**: Generate macros instantly with AI based on your profile
 - **Custom Tracking**: Manually set and track calories, protein, fat, and carbs
 - **Smart Calculations**: AI considers your profile and goals for accurate recommendations
+- **Placeholder Forms**: User-friendly forms with helpful placeholders
 
 ### 📋 Fitness Journal
+
 - **Notes & Tracking**: Document your fitness journey, workouts, and insights
 - **Vector Search**: AI uses your notes for personalized advice (AstraDB integration)
 - **Progress Tracking**: Keep a detailed log of your fitness journey
+- **Note Management**: Add, view, and delete notes easily
+- **AI Integration**: Notes are automatically used by AI for better recommendations
 
 ### 💬 Interactive Chat Interface
-- **Conversation History**: Full chat history with context-aware responses
+
+- **Conversation History**: Full chat history displayed with user and AI messages
+- **Context-Aware Responses**: AI uses conversation history for better answers
 - **Personalized Responses**: AI addresses you by name and uses your profile data
 - **Real-Time Advice**: Get instant answers to fitness and nutrition questions
+- **Chat Management**: Clear chat history with one click
+- **Multi-Agent Routing**: Automatically routes math questions to calculator agent
+
+### 🔒 Data Management
+
+- **Profile Deletion**: Delete user profiles with all associated data
+- **Safe Deletion**: Confirmation dialogs prevent accidental deletions
+- **Data Persistence**: All data stored securely in AstraDB
+- **Session Management**: Easy user switching without losing data
 
 ---
 
 ## 🛠️ Tech Stack
 
 ### Core Technologies
+
 - **Frontend**: [Streamlit](https://streamlit.io/) - Interactive web app framework
 - **Backend**: Python 3.8+
-- **AI/ML**: 
+- **AI/ML**:
   - [LangChain](https://www.langchain.com/) - LLM framework
   - [Groq AI](https://groq.com/) - Fast inference engine (FREE tier available)
-- **Database**: 
+- **Database**:
   - [AstraDB](https://www.datastax.com/products/datastax-astra) - Vector database for notes storage
   - Vector search capabilities for personalized recommendations
 
 ### Key Libraries
+
 - `langchain-groq` - Groq AI integration
 - `langchain-community` - Community tools and integrations
 - `langchain-classic` - Backward compatibility
@@ -146,29 +172,40 @@ The app will open in your browser at `http://localhost:8501`
 ### Getting Started
 
 1. **Select or Create User Profile**
+
    - Enter your name to create a new profile
    - Or select from existing users if you've used the app before
+   - Switch between users anytime using the sidebar
 
 2. **Fill Personal Information**
+
    - Complete your profile: age, weight, height, gender, activity level
    - All fields use placeholders for easy input
+   - Save your information to update your profile
 
 3. **Set Fitness Goals**
+
    - Choose from: Muscle Gain, Fat Loss, or Stay Active
    - You can select multiple goals
+   - Goals are saved and used by AI for recommendations
 
 4. **Generate Macros (Optional)**
+
    - Click "Generate Macros with AI" for personalized recommendations
+   - AI considers your profile, goals, and activity level
    - Or manually enter your daily targets
 
 5. **Add Notes**
+
    - Document your workouts, progress, or insights
    - AI uses these notes for personalized advice
+   - Delete notes you no longer need
 
 6. **Chat with AI Coach**
    - Ask any fitness or nutrition questions
    - AI uses your profile and notes for personalized responses
    - Conversation history is maintained for context
+   - Clear chat history anytime
 
 ### Example Questions
 
@@ -176,6 +213,27 @@ The app will open in your browser at `http://localhost:8501`
 - "What should I eat to meet my protein goal?"
 - "How many calories should I consume for fat loss?"
 - "Create a meal plan for muscle gain"
+- "Based on my profile, what's my ideal daily calorie intake?"
+- "What did I ask you about earlier?" (uses chat history)
+
+### Profile Management
+
+**Creating a Profile:**
+
+1. Enter your name on the welcome screen
+2. Profile is automatically created
+3. Fill in your personal information
+
+**Switching Users:**
+
+- Click "Switch User" in the sidebar
+- Select from existing users or create a new one
+
+**Deleting a Profile:**
+
+- **From User Selection**: Use the "Delete Profile" section, select a profile, and confirm
+- **From Sidebar**: Click "Delete My Profile" in the Danger Zone and confirm
+- ⚠️ **Warning**: This permanently deletes the profile and all associated notes
 
 ---
 
@@ -226,6 +284,7 @@ The easiest way to deploy this app is using [Streamlit Cloud](https://share.stre
 ### Other Platforms
 
 This app can also be deployed on:
+
 - **Heroku**
 - **Railway**
 - **Render**
@@ -238,20 +297,22 @@ This app can also be deployed on:
 
 ### Environment Variables
 
-| Variable | Description | Required |
-|----------|-------------|----------|
-| `GROQ_API_KEY` | Your Groq AI API key | ✅ Yes |
-| `ASTRA_DB_APPLICATION_TOKEN` | AstraDB authentication token | ✅ Yes |
-| `ASTRA_ENDPOINT` | Your AstraDB API endpoint | ✅ Yes |
+| Variable                     | Description                  | Required |
+| ---------------------------- | ---------------------------- | -------- |
+| `GROQ_API_KEY`               | Your Groq AI API key         | ✅ Yes   |
+| `ASTRA_DB_APPLICATION_TOKEN` | AstraDB authentication token | ✅ Yes   |
+| `ASTRA_ENDPOINT`             | Your AstraDB API endpoint    | ✅ Yes   |
 
 ### API Setup
 
 #### Groq AI (FREE)
+
 1. Sign up at [console.groq.com](https://console.groq.com/)
 2. Create an API key
 3. Free tier includes generous limits
 
 #### AstraDB (FREE)
+
 1. Sign up at [astra.datastax.com](https://astra.datastax.com/)
 2. Create a database
 3. Get your application token and endpoint
@@ -288,19 +349,40 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ## 📊 Features Roadmap
 
+### ✅ Completed Features
+
+- [x] Multiple user support with name-based profiles
+- [x] Profile deletion functionality with safety confirmations
+- [x] Chat history with context awareness
+- [x] AI-powered macro generation
+- [x] Notes management with vector search
+- [x] Personalized AI responses using user name
+- [x] User-friendly placeholder forms
+- [x] Profile switching functionality
+- [x] Conversation history display
+
+### 🚧 Planned Features
+
 - [ ] Workout plan generator
 - [ ] Meal plan creator
 - [ ] Progress tracking charts
 - [ ] Social features
 - [ ] Mobile app version
 - [ ] Integration with fitness trackers
+- [ ] Export/Import profile data
+- [ ] Data visualization and analytics
+- [ ] Workout calendar
+- [ ] Progress photos upload
 
 ---
 
 ## 🐛 Known Issues
 
-- Vector search requires AstraDB vectorization service configuration
-- Some LangChain imports may vary by version (handled with fallbacks)
+- **Vector Search**: Requires AstraDB vectorization service configuration (fallback to direct database queries implemented)
+- **LangChain Compatibility**: Some LangChain imports may vary by version (handled with fallbacks and langchain-classic)
+- **Profile Deletion**: Permanent action that cannot be undone (confirmation dialogs added for safety)
+- **Session State**: Chat history is session-based and clears when switching users
+- Profile deletion is permanent and cannot be undone (confirmation dialogs added for safety)
 
 ---
 
@@ -327,4 +409,3 @@ If you find this project helpful, please give it a ⭐ on GitHub!
 [⬆ Back to Top](#-ai-powered-fitness-coach)
 
 </div>
-
