@@ -247,107 +247,108 @@ def macros():
 
 def notes():
     """Notes management with vector search"""
-    st.header("📋 Fitness Journal & Notes")
-    st.caption("📝 Document your progress, workouts, and insights - AI uses these for personalized advice!")
-    
-    for i, note in enumerate(st.session_state.notes):
-        cols = st.columns([5, 1])
-        with cols[0]:
-            st.text(note.get("text"))
-        with cols[1]:
-            if st.button("🗑️", key=f"del_{i}"):
-                delete_note(note.get("_id"))
-                st.session_state.notes.pop(i)
-                st.rerun()
-    
-    st.markdown("---")
-    new_note = st.text_area(
-        "➕ Add a new note:", 
-        placeholder="E.g., 'Completed 5km run today, felt great!' or 'Noticed I have more energy after eating more protein'",
-        height=100
-    )
-    
-    col1, col2 = st.columns([1, 4])
-    with col1:
+    with st.container(border=True):
+        st.markdown("### 📋 Fitness Journal & Notes")
+        st.caption("📝 Document your progress, workouts, and insights - AI uses these for personalized advice!")
+        
+        if st.session_state.notes:
+            st.markdown("#### Your Notes:")
+            for i, note in enumerate(st.session_state.notes):
+                cols = st.columns([5, 1])
+                with cols[0]:
+                    st.text(note.get("text"))
+                with cols[1]:
+                    if st.button("🗑️", key=f"del_{i}"):
+                        delete_note(note.get("_id"))
+                        st.session_state.notes.pop(i)
+                        st.rerun()
+        
+        st.markdown("---")
+        new_note = st.text_area(
+            "➕ Add a new note:", 
+            placeholder="E.g., 'Completed 5km run today, felt great!' or 'Noticed I have more energy after eating more protein'",
+            height=100
+        )
+        
         add_note_button = st.button("➕ Add Note", type="primary", use_container_width=True)
-    with col2:
-        pass  # Empty column for spacing
-    
-    if add_note_button:
-        if new_note:
-            with st.spinner("💾 Adding note..."):
-                note = add_note(new_note, st.session_state.profile_id)
-                st.session_state.notes.append(note)
-                st.success("✅ Note added successfully!")
-                st.rerun()
-        else:
-            st.warning("⚠️ Please enter a note before adding!")
+        
+        if add_note_button:
+            if new_note:
+                with st.spinner("💾 Adding note..."):
+                    note = add_note(new_note, st.session_state.profile_id)
+                    st.session_state.notes.append(note)
+                    st.success("✅ Note added successfully!")
+                    st.rerun()
+            else:
+                st.warning("⚠️ Please enter a note before adding!")
 
 
 def ask_ai_func():
     """AI chat interface with multi-agent routing and chat history"""
-    st.header("🤖 AI Fitness Coach Chat")
-    st.caption("💡 Ask anything about fitness, nutrition, or workouts - Your AI coach uses your profile and notes for personalized advice!")
-    
-    # Initialize chat history in session state
-    if "chat_history" not in st.session_state:
-        st.session_state.chat_history = []
-    
-    # Display chat history
-    if st.session_state.chat_history:
-        st.markdown("### 💬 Conversation History")
-        with st.container():
-            for i, (role, message) in enumerate(st.session_state.chat_history):
-                if role == "human":
-                    with st.chat_message("user"):
-                        st.write(message)
-                else:  # ai
-                    with st.chat_message("assistant"):
-                        st.write(message)
-        st.divider()
-    
-    user_question = st.text_area(
-        "Your question:",
-        placeholder="Example: Can you create a leg day workout routine for me?",
-        key="user_question_input"
-    )
-    
-    col1, col2 = st.columns([1, 4])
-    with col1:
-        ask_button = st.button("🤖 Ask AI Coach", type="primary", use_container_width=True)
-    with col2:
-        if st.button("🗑️ Clear Chat History", use_container_width=True):
+    with st.container(border=True):
+        st.markdown("### 🤖 AI Fitness Coach Chat")
+        st.caption("💡 Ask anything about fitness, nutrition, or workouts - Your AI coach uses your profile and notes for personalized advice!")
+        
+        # Initialize chat history in session state
+        if "chat_history" not in st.session_state:
             st.session_state.chat_history = []
-            st.rerun()
-    
-    if ask_button:
-        if user_question:
-            with st.spinner("🧠 AI is thinking..."):
-                try:
-                    # Convert chat history to LangChain format
-                    langchain_history = []
-                    for role, message in st.session_state.chat_history:
-                        langchain_history.append((role, message))
-                    
-                    # Get AI response
-                    result = ask_ai_system.ask(
-                        user_question,
-                        st.session_state.profile,
-                        st.session_state.profile_id,
-                        chat_history=langchain_history
-                    )
-                    
-                    # Add to chat history
-                    st.session_state.chat_history.append(("human", user_question))
-                    st.session_state.chat_history.append(("ai", result))
-                    
-                    # Rerun to display updated chat history
-                    st.rerun()
-                    
-                except Exception as e:
-                    st.error(f"❌ Error: {str(e)}")
-        else:
-            st.warning("⚠️ Please enter a question!")
+        
+        # Display chat history
+        if st.session_state.chat_history:
+            st.markdown("#### 💬 Conversation History")
+            with st.container():
+                for i, (role, message) in enumerate(st.session_state.chat_history):
+                    if role == "human":
+                        with st.chat_message("user"):
+                            st.write(message)
+                    else:  # ai
+                        with st.chat_message("assistant"):
+                            st.write(message)
+            st.divider()
+        
+        user_question = st.text_area(
+            "Your question:",
+            placeholder="Example: Can you create a leg day workout routine for me?",
+            key="user_question_input",
+            height=100
+        )
+        
+        col1, col2 = st.columns([1, 1])
+        with col1:
+            ask_button = st.button("🤖 Ask AI Coach", type="primary", use_container_width=True)
+        with col2:
+            if st.button("🗑️ Clear Chat History", use_container_width=True):
+                st.session_state.chat_history = []
+                st.rerun()
+        
+        if ask_button:
+            if user_question:
+                with st.spinner("🧠 AI is thinking..."):
+                    try:
+                        # Convert chat history to LangChain format
+                        langchain_history = []
+                        for role, message in st.session_state.chat_history:
+                            langchain_history.append((role, message))
+                        
+                        # Get AI response
+                        result = ask_ai_system.ask(
+                            user_question,
+                            st.session_state.profile,
+                            st.session_state.profile_id,
+                            chat_history=langchain_history
+                        )
+                        
+                        # Add to chat history
+                        st.session_state.chat_history.append(("human", user_question))
+                        st.session_state.chat_history.append(("ai", result))
+                        
+                        # Rerun to display updated chat history
+                        st.rerun()
+                        
+                    except Exception as e:
+                        st.error(f"❌ Error: {str(e)}")
+            else:
+                st.warning("⚠️ Please enter a question!")
 
 
 def user_selection():
@@ -519,16 +520,20 @@ def forms():
             st.session_state.show_delete_confirm = False
             st.rerun()
     
-    # Render forms directly without tabs
-    personal_data_form()
-    st.divider()
-    goals_form()
-    st.divider()
-    macros()
-    st.divider()
-    notes()
-    st.divider()
-    ask_ai_func()
+    # Center the main content with reduced width
+    col1, col2, col3 = st.columns([1, 2.5, 1])
+    
+    with col2:
+        # Render forms with proper spacing
+        personal_data_form()
+        st.markdown("<br>", unsafe_allow_html=True)
+        goals_form()
+        st.markdown("<br>", unsafe_allow_html=True)
+        macros()
+        st.markdown("<br>", unsafe_allow_html=True)
+        notes()
+        st.markdown("<br>", unsafe_allow_html=True)
+        ask_ai_func()
 
 
 if __name__ == "__main__":
