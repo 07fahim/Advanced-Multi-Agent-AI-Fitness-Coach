@@ -37,127 +37,131 @@ with col2:
 
 def personal_data_form():
     """Form for collecting personal user data"""
-    with st.form("personal_data"):
-        st.header("👤 Personal Information")
-        st.caption("Tell us about yourself to get personalized recommendations")
-        profile = st.session_state.profile
+    # Compact card container that fits the screen
+    with st.container(border=True):
+        with st.form("personal_data", clear_on_submit=False):
+            profile = st.session_state.profile
 
-        # Get values - use None/empty for placeholders
-        name_value = profile["general"].get("name", "") or ""
-        age_value = profile["general"].get("age")
-        weight_value = profile["general"].get("weight")
-        height_value = profile["general"].get("height")
-        gender_value = profile["general"].get("gender", "")
-        activity_value = profile["general"].get("activity_level", "")
+            # Get values
+            name_value = profile["general"].get("name", "") or ""
+            age_value = profile["general"].get("age")
+            weight_value = profile["general"].get("weight")
+            height_value = profile["general"].get("height")
+            gender_value = profile["general"].get("gender", "")
+            activity_value = profile["general"].get("activity_level", "")
 
-        name = st.text_input("Name", value=name_value, placeholder="Enter your name")
-        
-        # Use min_value as default for empty fields to avoid validation errors
-        age = st.number_input(
-            "Age (years)", 
-            min_value=1, 
-            max_value=120, 
-            step=1, 
-            value=int(age_value) if age_value is not None and age_value > 0 else 1,
-            help="Enter your age in years"
-        )
-        age = age if age > 0 else None
-        
-        col1, col2 = st.columns(2)
-        with col1:
-            weight = st.number_input(
-                "Weight (kg)", 
-                min_value=0.0, 
-                max_value=300.0, 
-                step=0.1, 
-                value=float(weight_value) if weight_value is not None and weight_value > 0 else 0.0,
-                help="Enter your weight in kilograms"
+            # Compact header
+            st.markdown("### 👤 Personal Information")
+            
+            # Name field
+            name = st.text_input("Name", value=name_value, placeholder="Enter your name")
+            
+            # Age field
+            age = st.number_input(
+                "Age", 
+                min_value=1, 
+                max_value=120, 
+                step=1, 
+                value=int(age_value) if age_value is not None and age_value > 0 else 1
             )
-            weight = weight if weight > 0 else None
-        with col2:
-            height = st.number_input(
-                "Height (cm)", 
-                min_value=0.0, 
-                max_value=250.0, 
-                step=0.1, 
-                value=float(height_value) if height_value is not None and height_value > 0 else 0.0,
-                help="Enter your height in centimeters"
+            age = age if age > 0 else None
+            
+            # Weight and Height in two columns
+            col1, col2 = st.columns(2)
+            with col1:
+                weight = st.number_input(
+                    "Weight (kg)", 
+                    min_value=0.0, 
+                    max_value=300.0, 
+                    step=0.1, 
+                    value=float(weight_value) if weight_value is not None and weight_value > 0 else 0.0
+                )
+                weight = weight if weight > 0 else None
+            with col2:
+                height = st.number_input(
+                    "Height (cm)", 
+                    min_value=0.0, 
+                    max_value=250.0, 
+                    step=0.1, 
+                    value=float(height_value) if height_value is not None and height_value > 0 else 0.0
+                )
+                height = height if height > 0 else None
+            
+            # Gender radio buttons
+            genders = ["Male", "Female", "Other"]
+            try:
+                gender_index = genders.index(gender_value) if gender_value else 0
+            except ValueError:
+                gender_index = 0
+            gender = st.radio(
+                "Gender", 
+                genders,
+                index=gender_index,
+                horizontal=True
             )
-            height = height if height > 0 else None
-        
-        genders = ["", "Male", "Female", "Other"]
-        try:
-            gender_index = genders.index(gender_value) if gender_value else 0
-        except ValueError:
-            gender_index = 0
-        gender = st.radio(
-            "Gender", 
-            genders[1:],  # Skip empty option in display
-            index=gender_index - 1 if gender_index > 0 else 0,
-            horizontal=True
-        )
-        gender = gender if gender else None
-        
-        activities = ["", "Sedentary", "Lightly Active", "Moderately Active", "Very Active", "Super Active"]
-        try:
-            activity_index = activities.index(activity_value) if activity_value else 0
-        except ValueError:
-            activity_index = 0
-        activity_level = st.selectbox(
-            "Activity Level", 
-            activities[1:],  # Skip empty option in display
-            index=activity_index - 1 if activity_index > 0 else None,
-            placeholder="Select activity level"
-        )
-        activity_level = activity_level if activity_level else None
+            
+            # Activity Level dropdown
+            activities = ["Sedentary", "Lightly Active", "Moderately Active", "Very Active", "Super Active"]
+            try:
+                activity_index = activities.index(activity_value) if activity_value else 2
+            except ValueError:
+                activity_index = 2
+            activity_level = st.selectbox(
+                "Activity Level", 
+                activities,
+                index=activity_index
+            )
 
-        personal_data_submit = st.form_submit_button("💾 Save Personal Information", type="primary")
-        
-        if personal_data_submit:
-            if all([name, age, weight, height, gender, activity_level]):
-                with st.spinner("Saving..."):
-                    st.session_state.profile = update_personal_info(
-                        profile, 
-                        "general", 
-                        name=name, 
-                        weight=weight, 
-                        height=height,
-                        gender=gender, 
-                        age=age, 
-                        activity_level=activity_level
-                    )
-                    st.success("✅ Information saved!")
-            else:
-                st.warning("⚠️ Please fill in all fields!")
+            personal_data_submit = st.form_submit_button("💾 Save Personal Information", type="primary", use_container_width=True)
+            
+            if personal_data_submit:
+                if all([name, age, weight, height, gender, activity_level]):
+                    with st.spinner("Saving..."):
+                        st.session_state.profile = update_personal_info(
+                            profile, 
+                            "general", 
+                            name=name, 
+                            weight=weight, 
+                            height=height,
+                            gender=gender, 
+                            age=age, 
+                            activity_level=activity_level
+                        )
+                        st.success("✅ Information saved!")
+                        st.rerun()
+                else:
+                    st.warning("⚠️ Please fill in all fields!")
 
 
 def goals_form():
     """Form for selecting fitness goals"""
     profile = st.session_state.profile
     
-    with st.form("goals_form"):
-        st.header("🎯 Fitness Goals")
-        st.caption("Select your primary fitness objectives")
-        
-        goals = st.multiselect(
-            "Select your fitness goals",
-            ["Muscle Gain", "Fat Loss", "Stay Active"],
-            default=profile.get("goals", ["Muscle Gain"])
-        )
+    # Compact card container
+    with st.container(border=True):
+        with st.form("goals_form", clear_on_submit=False):
+            st.markdown("### 🎯 Fitness Goals")
+            
+            goals = st.multiselect(
+                "Select your fitness goals",
+                ["Muscle Gain", "Fat Loss", "Stay Active"],
+                default=profile.get("goals", ["Muscle Gain"])
+            )
 
-        goals_submit = st.form_submit_button("💾 Save Goals", type="primary")
-        
-        if goals_submit:
-            if goals:
-                with st.spinner("Saving..."):
-                    st.session_state.profile = update_personal_info(
-                        profile, 
-                        "goals", 
-                        goals=goals
-                    )
-                    st.success("✅ Goals updated!")
-            else:
-                st.warning("⚠️ Please select at least one goal!")
+            goals_submit = st.form_submit_button("💾 Save Goals", type="primary", use_container_width=True)
+            
+            if goals_submit:
+                if goals:
+                    with st.spinner("Saving..."):
+                        st.session_state.profile = update_personal_info(
+                            profile, 
+                            "goals", 
+                            goals=goals
+                        )
+                        st.success("✅ Goals updated!")
+                        st.rerun()
+                else:
+                    st.warning("⚠️ Please select at least one goal!")
 
 
 def macros():
