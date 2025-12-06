@@ -521,7 +521,7 @@ def forms():
             st.rerun()
     
     # Center the main content with reduced width
-    col1, col2, col3 = st.columns([1, 2.5, 1])
+    col1, col2, col3 = st.columns([0.5, 3.5, 0.5])
     
     with col2:
         # Render forms with proper spacing
