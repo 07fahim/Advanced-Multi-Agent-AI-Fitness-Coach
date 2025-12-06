@@ -21,7 +21,7 @@ macro_agent, ask_ai_system = get_agents()
 
 # Page config
 st.set_page_config(
-    page_title="Advanced Multi-Agent AI Fitness Coach",
+    page_title="Advanced Multi-Agent AI Fitness",
     page_icon="🏋️",
     layout="wide",
     initial_sidebar_state="expanded"
