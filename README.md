@@ -17,15 +17,43 @@ An intelligent fitness coaching application powered by AI that provides personal
 
 ---
 
+## 📸 App Screenshots
+
+<div align="center">
+
+### Main Dashboard
+
+![App Screenshot](assets/app-screenshot.png)
+
+_Personal Information Form with Card Layout_
+
+### AI Chat Interface
+
+![Chat Screenshot](assets/chat-screenshot.png)
+
+_Interactive AI Coach with Conversation History_
+
+### Nutrition & Macros
+
+![Macros Screenshot](assets/macros-screenshot.png)
+
+_AI-Generated Macro Recommendations_
+
+</div>
+
+> **Note:** Add your app screenshots to the `assets/` folder and update the image paths above.
+
+---
+
 ## 📹 Project Demo
 
 <div align="center">
 
 **🎥 Project Demo Video**
 
-<iframe src="https://player.vimeo.com/video/1144168977" width="640" height="360" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="max-width: 100%;"></iframe>
+[![Fitness Coach App Demo Video](https://img.youtube.com/vi/4koKplvon60/maxresdefault.jpg)](https://youtu.be/4koKplvon60)
 
-<p><a href="https://vimeo.com/1144168977">Watch on Vimeo</a></p>
+**👉 [Click the thumbnail above or here to watch the demo video on YouTube](https://youtu.be/4koKplvon60)**
 
 </div>
 
@@ -252,6 +280,11 @@ fitness-app/
 ├── requirements.txt       # Python dependencies
 ├── .env                   # Environment variables (not in repo)
 ├── .gitignore            # Git ignore rules
+│
+├── assets/               # Images and screenshots for README
+│   ├── app-screenshot.png
+│   ├── chat-screenshot.png
+│   └── macros-screenshot.png
 │
 ├── README.md             # This file
 ├── DEPLOYMENT_GUIDE.md   # Deployment instructions

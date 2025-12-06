@@ -30,3 +30,15 @@ ENV/
 # OS
 .DS_Store
 Thumbs.db
+
+# Media files (videos, images - keep small screenshots)
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.webm
+assets/*.mp4
+# Allow small images for README
+!assets/*.png
+!assets/*.jpg
+!assets/*.jpeg
