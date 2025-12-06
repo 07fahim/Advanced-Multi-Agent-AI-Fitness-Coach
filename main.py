@@ -359,23 +359,14 @@ def user_selection():
         st.markdown("### 👥 Existing Users")
         st.caption("Select your name if you've used the app before")
         
-        col1, col2 = st.columns([3, 1])
-        with col1:
-            selected_existing = st.selectbox(
-                "Choose your profile:",
-                [""] + existing_users,
-                key="existing_user_select",
-                help="Select your name from the list"
-            )
-        with col2:
-            st.write("")  # Spacing
-            st.write("")  # Spacing
-            delete_profile_name = st.selectbox(
-                "🗑️ Delete:",
-                [""] + existing_users,
-                key="delete_profile_select",
-                help="Select a profile to delete"
-            )
+        # Profile selection section
+        selected_existing = st.selectbox(
+            "Choose your profile:",
+            [""] + existing_users,
+            key="existing_user_select",
+            help="Select your name from the list",
+            label_visibility="visible"
+        )
         
         if selected_existing:
             profile = get_profile_by_name(selected_existing)
@@ -387,15 +378,31 @@ def user_selection():
                 st.session_state.chat_history = []
                 st.rerun()
         
+        # Delete profile section - separate and clearly marked
+        st.markdown("---")
+        st.markdown("#### 🗑️ Delete Profile")
+        st.caption("⚠️ Permanently delete a profile and all associated data")
+        
+        delete_profile_name = st.selectbox(
+            "Select profile to delete:",
+            [""] + existing_users,
+            key="delete_profile_select",
+            help="Choose a profile to permanently delete",
+            label_visibility="visible"
+        )
+        
         if delete_profile_name:
-            st.warning(f"⚠️ You are about to delete profile: **{delete_profile_name}**")
+            st.warning(f"⚠️ **Warning:** You are about to delete profile: **{delete_profile_name}**")
             st.caption("This will permanently delete the profile and all associated notes. This action cannot be undone.")
-            col1, col2 = st.columns(2)
+            
+            col1, col2 = st.columns([1, 1])
             with col1:
                 if st.button("🗑️ Confirm Delete", type="primary", use_container_width=True, key="confirm_delete_user_select"):
                     if delete_profile_by_name(delete_profile_name):
                         st.success(f"✅ Profile '{delete_profile_name}' and all associated data have been deleted.")
                         st.info("🔄 Refreshing user list...")
+                        # Clear the delete selection
+                        st.session_state.delete_profile_select = ""
                         st.rerun()
                     else:
                         st.error("❌ Failed to delete profile. Please try again.")
@@ -473,27 +480,30 @@ def forms():
     
     st.sidebar.markdown("---")
     st.sidebar.markdown("### ⚠️ Danger Zone")
-    if st.sidebar.button("🗑️ Delete My Profile", use_container_width=True, type="secondary"):
-        st.session_state.show_delete_confirm = True
+    st.sidebar.caption("Permanently delete your profile")
     
-    if st.session_state.get("show_delete_confirm", False):
+    if not st.session_state.get("show_delete_confirm", False):
+        if st.sidebar.button("🗑️ Delete My Profile", use_container_width=True, type="secondary"):
+            st.session_state.show_delete_confirm = True
+            st.rerun()
+    else:
         st.sidebar.warning(f"⚠️ Delete **{st.session_state.user_name}**?")
-        col1, col2 = st.sidebar.columns(2)
-        with col1:
-            if st.button("✅ Yes, Delete", use_container_width=True, type="primary"):
-                if delete_profile_by_name(st.session_state.user_name):
-                    st.sidebar.success("✅ Profile deleted!")
-                    # Clear session state
-                    for key in ["user_name", "profile", "profile_id", "notes", "chat_history", "show_delete_confirm"]:
-                        if key in st.session_state:
-                            del st.session_state[key]
-                    st.rerun()
-                else:
-                    st.sidebar.error("❌ Failed to delete profile.")
-        with col2:
-            if st.button("❌ Cancel", use_container_width=True):
-                st.session_state.show_delete_confirm = False
+        st.sidebar.caption("This action cannot be undone!")
+        
+        if st.sidebar.button("✅ Yes, Delete", use_container_width=True, type="primary", key="sidebar_confirm_delete"):
+            if delete_profile_by_name(st.session_state.user_name):
+                st.sidebar.success("✅ Profile deleted!")
+                # Clear session state
+                for key in ["user_name", "profile", "profile_id", "notes", "chat_history", "show_delete_confirm"]:
+                    if key in st.session_state:
+                        del st.session_state[key]
                 st.rerun()
+            else:
+                st.sidebar.error("❌ Failed to delete profile.")
+        
+        if st.sidebar.button("❌ Cancel", use_container_width=True, key="sidebar_cancel_delete"):
+            st.session_state.show_delete_confirm = False
+            st.rerun()
     
     # Render forms directly without tabs
     personal_data_form()
