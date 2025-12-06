@@ -21,6 +21,12 @@ Get personalized fitness coaching and nutrition guidance powered by AI, tailored
 
 <div align="center">
 
+### Welcome/Starting Page
+
+![Starting Page Screenshot](assets/starting-page-screenshot.png)
+
+_User Selection Screen with Centered Design_
+
 ### Main Dashboard
 
 ![App Screenshot](assets/app-screenshot.png)
@@ -282,6 +288,7 @@ fitness-app/
 ├── .gitignore            # Git ignore rules
 │
 ├── assets/               # Images and screenshots for README
+│   ├── starting-page-screenshot.png
 │   ├── app-screenshot.png
 │   ├── chat-screenshot.png
 │   └── macros-screenshot.png
