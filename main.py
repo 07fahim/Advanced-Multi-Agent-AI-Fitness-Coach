@@ -357,7 +357,7 @@ def user_selection():
     col1, col2, col3 = st.columns([1, 2, 1])
     
     with col2:
-        st.title("👤 Welcome to Advanced Multi-Agent AI Fitness Coach")
+        st.title("👤 Welcome to AI Fitness Coach App")
         st.markdown("### Get Started")
         st.info("💡 Enter your name to continue. If you're new, a profile will be created for you automatically.")
         
