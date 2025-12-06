@@ -19,12 +19,13 @@ An intelligent fitness coaching application powered by AI that provides personal
 
 ## 📹 Project Demo
 
-<!-- TODO: Add project video here -->
 <div align="center">
 
-**🎥 Project Demo Video Coming Soon!**
+**🎥 Project Demo Video**
 
-(https://vimeo.com/1144168977?share=copy)
+<iframe src="https://player.vimeo.com/video/1144168977" width="640" height="360" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="max-width: 100%;"></iframe>
+
+<p><a href="https://vimeo.com/1144168977">Watch on Vimeo</a></p>
 
 </div>
 
