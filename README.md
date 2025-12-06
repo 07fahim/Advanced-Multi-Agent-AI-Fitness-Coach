@@ -1,4 +1,4 @@
-# 🏋️ Advanced Multi-Agent AI Fitness Coach
+# 🏋️ Advanced Multi-Agent AI Fitness Coach App
 
 <div align="center">
 

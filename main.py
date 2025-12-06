@@ -21,7 +21,7 @@ macro_agent, ask_ai_system = get_agents()
 
 # Page config
 st.set_page_config(
-    page_title="Advanced Multi-Agent AI Fitness",
+    page_title="Advanced Multi-Agent AI Fitness Coach App",
     page_icon="🏋️",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -30,7 +30,7 @@ st.set_page_config(
 # Header with professional styling
 col1, col2, col3 = st.columns([1, 3, 1])
 with col2:
-    st.title("🏋️ Advanced Multi-Agent AI Fitness Coach")
+    st.title("🏋️ Advanced Multi-Agent AI Fitness Coach App")
     st.markdown("### *Your Personal Trainer & Nutritionist in One*")
     st.divider()
 
@@ -352,7 +352,7 @@ def ask_ai_func():
 
 def user_selection():
     """User selection screen - name-based"""
-    st.title("👤 Welcome to Advanced Multi-Agent AI Fitness Coach")
+    st.title("👤 Welcome to AI Fitness Coach App")
     st.markdown("### Get Started")
     st.info("💡 Enter your name to continue. If you're new, a profile will be created for you automatically.")
     
