@@ -11,7 +11,7 @@
 
 Get personalized fitness coaching and nutrition guidance powered by AI, tailored to your goals and profile.
 
-[🚀 Live Demo](https://fitness-coach-wsipw4fnqsa9zkrdej4cjh.streamlit.app) • [🐛 Report Bug](#) • [💡 Request Feature](#)
+[🚀 Live Demo](https://advanced-multi-agent-ai-fitness-coach-s7t2teyodwzbwhgpgqs4xw.streamlit.app) • [🐛 Report Bug](#) • [💡 Request Feature](#)
 
 </div>
 
