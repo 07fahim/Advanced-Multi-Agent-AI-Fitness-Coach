@@ -30,15 +30,3 @@ ENV/
 # OS
 .DS_Store
 Thumbs.db
-"""
-
-# ============================================================================
-# FILE: requirements.txt
-# ============================================================================
-"""
-streamlit==1.32.0
-langchain==0.1.13
-langchain-groq==0.0.3
-langchain-community==0.0.29
-astrapy==1.0.0
-python-dotenv==1.0.0
