@@ -57,7 +57,7 @@ _AI-Generated Macro Recommendations_
 
 **🎥 Project Demo Video**
 
-[![Fitness Coach App Demo Video](https://vimeo.com/1144237056?share=copy&fl=sv&fe=ci)
+[Fitness Coach App Demo Video](https://vimeo.com/1144237056?share=copy&fl=sv&fe=ci)
 
 **👉 [Click the thumbnail above or here to watch the demo video on YouTube](https://vimeo.com/1144237056?share=copy&fl=sv&fe=ci)**
 
