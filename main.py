@@ -112,6 +112,11 @@ def personal_data_form():
                 index=activity_index
             )
 
+            # Display success message if exists
+            if st.session_state.get("personal_info_saved", False):
+                st.success("✅ Information saved!")
+                st.session_state.personal_info_saved = False  # Clear after showing
+            
             personal_data_submit = st.form_submit_button("💾 Save Personal Information", type="primary", use_container_width=True)
             
             if personal_data_submit:
@@ -127,7 +132,7 @@ def personal_data_form():
                             age=age, 
                             activity_level=activity_level
                         )
-                        st.success("✅ Information saved!")
+                        st.session_state.personal_info_saved = True  # Set flag for next render
                         st.rerun()
                 else:
                     st.warning("⚠️ Please fill in all fields!")
@@ -148,6 +153,11 @@ def goals_form():
                 default=profile.get("goals", ["Muscle Gain"])
             )
 
+            # Display success message if exists
+            if st.session_state.get("goals_saved", False):
+                st.success("✅ Goals updated!")
+                st.session_state.goals_saved = False  # Clear after showing
+            
             goals_submit = st.form_submit_button("💾 Save Goals", type="primary", use_container_width=True)
             
             if goals_submit:
@@ -158,7 +168,7 @@ def goals_form():
                             "goals", 
                             goals=goals
                         )
-                        st.success("✅ Goals updated!")
+                        st.session_state.goals_saved = True  # Set flag for next render
                         st.rerun()
                 else:
                     st.warning("⚠️ Please select at least one goal!")
@@ -232,6 +242,11 @@ def macros():
             )
             carbs = carbs if carbs > 0 else None
 
+        # Display success message if exists
+        if st.session_state.get("macros_saved", False):
+            st.success("✅ Macros saved!")
+            st.session_state.macros_saved = False  # Clear after showing
+
         if st.form_submit_button("💾 Save Macros", type="primary"):
             with st.spinner("Saving..."):
                 st.session_state.profile = update_personal_info(
@@ -242,7 +257,8 @@ def macros():
                     fat=fat, 
                     carbs=carbs
                 )
-                st.success("✅ Macros saved!")
+                st.session_state.macros_saved = True  # Set flag for next render
+                st.rerun()
 
 
 def notes():
