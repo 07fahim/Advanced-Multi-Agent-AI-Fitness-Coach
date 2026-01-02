@@ -47,7 +47,6 @@ _AI-Generated Macro Recommendations_
 
 </div>
 
-> **Note:** Add your app screenshots to the `assets/` folder and update the image paths above.
 
 ---
 
