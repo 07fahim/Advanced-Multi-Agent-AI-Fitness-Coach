@@ -64,6 +64,37 @@ _AI-Generated Macro Recommendations_
 
 ---
 
+## 🏗️ System Architecture
+
+<div align="center">
+
+![Advanced Multi-Agent AI Fitness Coach Architecture](assets/architecture-diagram.png)
+
+</div>
+
+### Architecture Overview
+
+The application is built using a **modular multi-agent architecture** designed for scalability, accuracy, and personalization.
+
+- **Frontend (Streamlit)**  
+  Handles user interaction, profile management, fitness journal entries, and chat interface.
+
+- **AI Coaching Engine (Multi-Agent System)**  
+  A response orchestrator coordinates specialized agents:
+  - **Profile & Context Manager** – Maintains user history, goals, and context
+  - **Nutrition Agent** – Generates personalized nutrition advice
+  - **Math & Calculation Agent** – Performs deterministic calorie and macro calculations
+
+- **Vector Database (AstraDB)**  
+  Stores user profiles and **fitness logs & journals**, embedded for semantic search and long-term memory.
+
+- **LLM Inference Layer (Groq + LangChain)**  
+  LangChain manages agent routing and prompt logic, while Groq provides ultra-fast LLM inference for real-time responses.
+
+This architecture cleanly separates **reasoning, memory, and computation**, enabling accurate and context-aware AI coaching.
+
+---
+
 ## ✨ Features
 
 ### 🤖 AI-Powered Coaching
