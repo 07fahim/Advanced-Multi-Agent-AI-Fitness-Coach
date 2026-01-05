@@ -1,10 +1,9 @@
 # ============================================================================
-# FILE: db.py (FIXED & STREAMLIT-CLOUD SAFE)
+# FILE: db.py (PRODUCTION SAFE)
 # ============================================================================
 
 from astrapy import DataAPIClient
 from dotenv import load_dotenv
-import streamlit as st
 import os
 
 load_dotenv()
@@ -12,16 +11,24 @@ load_dotenv()
 ENDPOINT = os.getenv("ASTRA_ENDPOINT")
 TOKEN = os.getenv("ASTRA_DB_APPLICATION_TOKEN")
 
+_client = None
+_db = None
 
-@st.cache_resource
+
 def get_db():
-    """Create and cache AstraDB client"""
-    client = DataAPIClient(TOKEN)
-    return client.get_database_by_api_endpoint(ENDPOINT)
+    global _client, _db
+
+    if _db is None:
+        if not ENDPOINT or not TOKEN:
+            raise RuntimeError("Astra DB credentials are missing")
+
+        _client = DataAPIClient(TOKEN)
+        _db = _client.get_database_by_api_endpoint(ENDPOINT)
+
+    return _db
 
 
 def get_collection(name: str):
-    """Lazy-load a collection (safe for cold starts)"""
     db = get_db()
     try:
         return db.get_collection(name)
