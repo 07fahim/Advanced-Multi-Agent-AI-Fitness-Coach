@@ -1,12 +1,18 @@
 # ============================================================================
-# FILE: profiles.py
+# FILE: profiles.py (STREAMLIT CLOUD SAFE)
 # ============================================================================
 
-from db import personal_data_collection, notes_collection
+from db import get_personal_data_collection, get_notes_collection
+
+
+def _get_collections():
+    return (
+        get_personal_data_collection(),
+        get_notes_collection()
+    )
 
 
 def get_values(_id):
-    """Get default profile values (empty for placeholders)"""
     return {
         "_id": _id,
         "general": {
@@ -28,65 +34,65 @@ def get_values(_id):
 
 
 def create_profile(_id):
-    """Create a new profile in the database"""
+    personal_data_collection, _ = _get_collections()
     profile_values = get_values(_id)
     result = personal_data_collection.insert_one(profile_values)
-    # Return the profile_values, not result object
     return result.inserted_id, profile_values
 
 
 def get_profile(_id):
-    """Get profile by ID"""
-    return personal_data_collection.find_one({"_id": {"$eq": _id}})
+    personal_data_collection, _ = _get_collections()
+    return personal_data_collection.find_one({"_id": _id})
 
 
 def get_profile_by_name(name):
-    """Get profile by user name"""
     if not name or not name.strip():
         return None
-    return personal_data_collection.find_one({"general.name": {"$eq": name.strip()}})
+    personal_data_collection, _ = _get_collections()
+    return personal_data_collection.find_one(
+        {"general.name": name.strip()}
+    )
 
 
 def create_profile_by_name(name):
-    """Create a new profile with the given name"""
     if not name or not name.strip():
         return None, None
-    
-    # Get all profiles to determine next ID
+
+    personal_data_collection, _ = _get_collections()
+
     all_profiles = list(personal_data_collection.find({}))
     next_id = max([p.get("_id", 0) for p in all_profiles] + [0]) + 1
-    
+
     profile_values = get_values(next_id)
     profile_values["general"]["name"] = name.strip()
-    
+
     result = personal_data_collection.insert_one(profile_values)
     return result.inserted_id, profile_values
 
 
 def get_all_user_names():
-    """Get list of all user names from existing profiles"""
+    personal_data_collection, _ = _get_collections()
     profiles = list(personal_data_collection.find({}))
+
     names = []
     for profile in profiles:
         name = profile.get("general", {}).get("name", "").strip()
         if name:
             names.append(name)
+
     return sorted(set(names))
 
 
 def get_notes(_id):
-    """Get all notes for a user"""
-    return list(notes_collection.find({"user_id": {"$eq": _id}}))
+    _, notes_collection = _get_collections()
+    return list(notes_collection.find({"user_id": _id}))
 
 
 def delete_profile(profile_id):
-    """Delete a profile and all associated notes"""
+    personal_data_collection, notes_collection = _get_collections()
     try:
-        # Delete all notes associated with this profile
-        notes_collection.delete_many({"user_id": {"$eq": profile_id}})
-        
-        # Delete the profile
-        result = personal_data_collection.delete_one({"_id": {"$eq": profile_id}})
+        notes_collection.delete_many({"user_id": profile_id})
+        result = personal_data_collection.delete_one({"_id": profile_id})
         return result.deleted_count > 0
     except Exception as e:
         print(f"Error deleting profile: {e}")
@@ -94,10 +100,9 @@ def delete_profile(profile_id):
 
 
 def delete_profile_by_name(name):
-    """Delete a profile by name and all associated notes"""
     if not name or not name.strip():
         return False
-    
+
     profile = get_profile_by_name(name.strip())
     if profile:
         return delete_profile(profile["_id"])
